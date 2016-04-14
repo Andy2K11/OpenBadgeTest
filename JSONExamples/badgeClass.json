@@ -1,0 +1,10 @@
+{
+    @context: "https://w3id.org/openbadges/v1",
+    id: "http://openbadges.corductive.uk/badgeClass.json",
+    type: "BadgeClass",
+    name: "Achievement name",
+    description: "Achievement description",
+    image: "http://openbadges.corductive.uk/testBadge.png",
+    criteria: "http://openbadges.corductive.uk/testCriteria.html",
+    issuer: "http://openbadges.corductive.uk/issuerOrganisation.json"
+}

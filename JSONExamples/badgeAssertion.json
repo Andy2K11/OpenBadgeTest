@@ -1,0 +1,16 @@
+{
+    "@context": "https://w3id.org/openbadges/v1",
+    "type": "Assertion",
+    "uid": "abcd123",
+    "recipient": {
+        "identity": "identityHash",
+        "type": "Text",
+        "hashed": false
+    },
+    "badge": "http://openbadges.corductive.uk/badgeClass.json",
+    "verify": {
+        "type": "hosted",
+        "url": "http://openbadges.corductive.uk/badgeAssertion.json"
+    },
+    "issuedOn": 1460666071790
+}
