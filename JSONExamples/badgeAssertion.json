@@ -1,16 +1,19 @@
 {
     "@context": "https://w3id.org/openbadges/v1",
     "type": "Assertion",
+    "id": "http://openbadges.corductive.uk/badgeAssertion.json",
     "uid": "abcd123",
     "recipient": {
-        "identity": "identityHash",
-        "type": "Text",
+        "identity": "andy@corductive.uk",
+        "type": "email",
         "hashed": false
     },
+    "image": "http://openbadges.corductive.uk/testBadge.png",
+    "evidence": "http://openbadges.corductive.uk/index.html",
     "badge": "http://openbadges.corductive.uk/badgeClass.json",
     "verify": {
         "type": "hosted",
         "url": "http://openbadges.corductive.uk/badgeAssertion.json"
     },
-    "issuedOn": 1460666071790
+    "issuedOn": "2016-04-15"
 }
