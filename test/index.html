@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>-->
+    <script src="https://backpack.openbadges.org/issuer.js"></script>
+    <script> 
+        /* For testing
+        dW5pcXVlaWQ9NUFCMTdGRDAmdHlwZT1vcGVuYmFkZ2U=
+        ?aCode=laksdfjuiasydfkjasdhfkljhasdf&anothercode=lkasjdfoiksdfkjasdflksadoiejdf&claim_code=dW5pcXVlaWQ9NUFCMTdGRDAmdHlwZT1vcGVuYmFkZ2U=&other=breakme
+        https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBUzyVgWLe8K2P/exec?claim_code=?claim_code=dW5pcXVlaWQ9NUFCMTdGRDAmdHlwZT1vcGVuYmFkZ2U=
+        http://backpack.openbadges.org/baker?assertion=https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBUzyVgWLe8K2P/exec?claim_code=?claim_code=dW5pcXVlaWQ9NUFCMTdGRDAmdHlwZT1vcGVuYmFkZ2U=
+        */        
+      
+        var baseUrl = "https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBUzyVgWLe8K2P/exec?claim_code=";
+        var bakerBaseUrl = "http://backpack.openbadges.org/baker?assertion=";
+        
+        function getQueryString() {
+            var urlSearchString = window.location.search;
+            // console.log("Search String: " + urlSearchString);
+            var startIndex = urlSearchString.search("claim_code=") + 11;
+            var separatorIndex = urlSearchString.indexOf("&", startIndex);
+            // console.log("separator: " + separatorIndex);
+            var endIndex = separatorIndex + 1 ? separatorIndex - startIndex : urlSearchString.length;
+            // console.log("Indecies: " + startIndex + ", " + endIndex);
+            var result =  urlSearchString.substr(startIndex, endIndex);
+            // console.log("Value of query: " + result);
+            return result; 
+        }
+                
+        function callback(err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+        }
+        
+        function doIssue() {
+            var link = baseUrl + getQueryString();
+            OpenBadges.issue_no_modal([link], callback);
+        }
+        
+        function doBake() {
+            var link = bakerBaseUrl + baseUrl + getQueryString();
+            return link;
+        }
+        
+        /*
+         * Deprecated
+         */
+        function getData() {
+            var elem = document.getElementById("download");
+            elem.setAttribute("href", baseUrl + getQueryString());
+            //elem.setAttribute("download", "assertion.json");      //not taking filename, think because file size is unknown (it's being created on the fly)
+            elem.click();
+        }
+        
+        /*
+         * Deprecated
+         */
+        function setBakeLink() {
+            var elem = document.getElementById("bakery");
+            elem.setAttribute("href", bakerBaseUrl + baseUrl + getQueryString());
+        }
+        
+        function doEnable() {
+            var b1 = document.getElementById("b1");
+            var b2 = document.getElementById("b2");
+            var answer = document.getElementById("q1a2");
+            console.log(answer.checked);
+            if (answer.checked) {
+                b1.disabled = false;
+                b2.disabled = false;
+                document.getElementById("answer").innerHTML = "";
+            } else {
+                b1.disabled = true;
+                b2.disabled = true;
+                document.getElementById("answer").innerHTML = "Sorry that is not the correct answer.";
+            }
+        }
+    </script>
+</head>
+<body onload="setBakeLink();">
+    <h1>Open Badges Test</h1>
+    <div style="margin: 20px">
+        <h2>Qualifying questions</h2>
+        <p>Answer the following questions to qualify for your badge!</p>
+        <h3>What is the best way to study a book?</h3>
+        <!--<form action="doEnable();">-->
+            <label for="q1a1">Reread it over and over again until it sticks</label>
+            <input type="radio" name="q1" id="q1a1" value="q1a1"><br>
+            <label for="q1a2">Reread it again after a few days to remind yourself of what have learned</label>
+            <input type="radio" name="q1" id="q1a2" value="q1a2"><br>
+            <button type="submit" onclick="doEnable();">Submit</button>
+            <p id="answer" style="color: red"></p>
+        <!--</form>-->
+    </div>
+    <button id="b1" type='submit' onclick='doIssue();' title="This will bake your badge and place it in your backpack" disabled>Issue to your Mozilla backpack</button>
+    <button id="b2" type='submit' onclick='location.href=doBake();' title="Uses the Baker REST API" disabled>Download your baked badge</button>
+    <br>
+    <p>Once you've baked your badge you can keep hold of it or upload it to an open badges store. A good alternative to Mozilla's Backpack is the 
+        <a href="https://openbadgepassport.com/en/badges/upload">Open Badge Passport</a></p>
+    <p>To test issuing another badge go to the <a target="_blank" href="https://docs.google.com/forms/d/1fGpXaDRRAJBGDW5yLFmWktUCSxKsQAUwUysS7zX5nVE/viewform">badge issuer</a>.</p>
+    <p>To create a badge visit <a target="_blank" href="https://docs.google.com/forms/d/1e0sb_9JwHzDQ5VIx3kYX5sbl1NgM-nJE2L6xTItfIWM/viewform">badge generator</a>.</p>
+    
+    <div style="font-size:small; margin-top: 100px">
+        <p>Or follow the link to your <a  href="javascript:getData();" id="download">badge assertion data</a> and right-click to save as badgeAssertion.json<br>
+        This will allow you to import your badge into your own records.</p>
+        
+        <h2>Baking</h2>
+        <a href="http://bakery.openbadges.org/">Bakery</a>
+        <p>If you want to keep your own badges then you will need to <a id="bakery" a href="">bake</a> them.</p>
+    </div>
+</body>
+</html>
