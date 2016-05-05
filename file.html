@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        function test() {
+            var test = document.getElementById("test");
+            console.log("Value: " + test.value);
+        }
+        
+    </script>
+</head>
+<body>
+    <input id="test" type="file" onchange="test()">
+</body>
+</html>

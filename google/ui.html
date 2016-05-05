@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <script src="ui.js"></script>
+  <script src="validation.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>UCS Open Badges Issuer v1.1</h1>
+
+  <form id="badge-form" action="https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBUzyVgWLe8K2P/exec"
+    onsubmit="return validateForm();" method="post">
+    <label for="badge-selector">Select Badge</label>
+    <select id="badge-selector" name="badgename" value="Choose badge" required>
+    </select>
+
+    <button type="button" onclick="showAddNew(true);">Add New</button><br>
+
+    <fieldset id="addnew">
+      <legend>Add new badge</legend>
+
+      <label for="badge-name">Name</label>
+      <input type="text" id="badge-name" onblur="validateInput('badge-name')">
+      <span>Please enter a name for your badge</span>
+      <span id="badge-name-error" class="error-msg"></span>
+
+      <label for="badge-desc">Description</label>
+      <input type="text" id="badge-desc" onblur="validateInput('badge-desc')">
+      <span>Please enter a description for your badge</span>
+      <span id="badge-desc-error" class="error-msg"></span>
+      
+      <label for="badge-image">Image</label>
+      <input type="text" id="badge-image" onblur="validateInput('badge-image')">
+      <span>The image must be a fully qualified url of type png</span>
+      <span id="badge-image-error" class="error-msg"></span>
+
+      <label for="badge-criteria">Criteria</label>
+      <input type="text" id="badge-criteria" onblur="validateInput('badge-criteria')">
+      <span>This must be a fully qualified url to a statement describing what the learner will have to achieve
+to qualify for this badge</span>
+      <span id="badge-criteria-error" class="error-msg"></span>
+      <br>
+      <button type="button" onclick="createBadge()">Create Badge</button>
+      <button type="button" onclick="showAddNew(false);">Cancel</button><br>
+    </fieldset>
+
+    <label for="import">Import Recipients from CSV</label>
+    <input id="import-recipients" type="file" onchange="importRecipients();" accept=".csv" name="import">
+
+    <fieldset id="recipient">
+      <legend>Recipient Details</legend>
+      
+      <label for="recipient-name">Name</label>
+      <input type="text" id="recipient-name" name="name" required>
+      <span>What is the recipient's name?</span>
+      <span id="recipient-name-error" class="error-msg"></span>
+
+      <label for="recipient-email">Email</label>
+      <input type="text" id="recipient-email" name="email" required>
+      <span>Please enter the full email address e.g. studentname@example.ac.uk</span>
+      <span id="recipient-email-error" class="error-msg"></span>
+    </fieldset>
+    <button id="issue" type="submit" form="badge-form">Issue Badges</button>
+  </form>
+  <p id="form-error" class="error-msg">Your form contains errors</p>
+</body>
+
+</html>
