@@ -2,7 +2,7 @@
     display: none;
 }
 
-label, input {
+label, input, textarea {
     display: block;
 }
 

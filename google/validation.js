@@ -46,6 +46,27 @@ function validateInput(id) {
                 isValid = true;
             }
             break;
+        case "import-recipients":
+            if (inputField.file) {
+                inputFieldError.innerHTML = "No file attached";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "recipient-name":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Enter recipient's name";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "recipient-email":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Enter recipient's email";
+            } else {
+                isValid = true;
+            }
+            break;
         default:
             console.log("Could not validate input with id " + id);
             break;
@@ -82,7 +103,7 @@ function validateBadge() {
 
 function validateRecipient() {
     /* If not valid import, validate recipient details */
-    if (!validageInput("import-recipients")) {
+    if (!validateInput("import-recipients")) {
         if (!validateInput("recipient-name")) { return false; }
         if (!validateInput("recipient-email")) { return false; }
     }
@@ -114,5 +135,6 @@ function validateForm() {
         return false;
     }
     console.log("Form submitted");
+    //return false; // for testing
 }
 

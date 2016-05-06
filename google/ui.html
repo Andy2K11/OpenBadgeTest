@@ -3,9 +3,15 @@
 
 <head>
   <base target="_top">
-  <script src="ui.js"></script>
-  <script src="validation.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <script>
+    {% include "ui.js" %}
+  </script>
+  <script>
+    {% include "validation.js" %}
+  </script>
+  <style>
+    {% include "style.css" %}
+  </style>
 </head>
 
 <body>
@@ -14,7 +20,7 @@
   <form id="badge-form" action="https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBUzyVgWLe8K2P/exec"
     onsubmit="return validateForm();" method="post">
     <label for="badge-selector">Select Badge</label>
-    <select id="badge-selector" name="badgename" value="Choose badge" required>
+    <select id="badge-selector" name="selectedbadge" value="Choose badge" required>
     </select>
 
     <button type="button" onclick="showAddNew(true);">Add New</button><br>
@@ -23,22 +29,22 @@
       <legend>Add new badge</legend>
 
       <label for="badge-name">Name</label>
-      <input type="text" id="badge-name" onblur="validateInput('badge-name')">
+      <input type="text" name="badgename" id="badge-name" onblur="validateInput('badge-name')">
       <span>Please enter a name for your badge</span>
       <span id="badge-name-error" class="error-msg"></span>
 
       <label for="badge-desc">Description</label>
-      <input type="text" id="badge-desc" onblur="validateInput('badge-desc')">
+      <textarea type="text" name="badgedesc" id="badge-desc" onblur="validateInput('badge-desc')"></textarea>
       <span>Please enter a description for your badge</span>
       <span id="badge-desc-error" class="error-msg"></span>
       
       <label for="badge-image">Image</label>
-      <input type="text" id="badge-image" onblur="validateInput('badge-image')">
+      <input type="url" name="badgeimage" id="badge-image" onblur="validateInput('badge-image')">
       <span>The image must be a fully qualified url of type png</span>
       <span id="badge-image-error" class="error-msg"></span>
 
       <label for="badge-criteria">Criteria</label>
-      <input type="text" id="badge-criteria" onblur="validateInput('badge-criteria')">
+      <input type="url" name="badgecriteria" id="badge-criteria" onblur="validateInput('badge-criteria')">
       <span>This must be a fully qualified url to a statement describing what the learner will have to achieve
 to qualify for this badge</span>
       <span id="badge-criteria-error" class="error-msg"></span>
@@ -49,7 +55,8 @@ to qualify for this badge</span>
 
     <label for="import">Import Recipients from CSV</label>
     <input id="import-recipients" type="file" onchange="importRecipients();" accept=".csv" name="import">
-
+    <span id="import-recipients-error" class="error-msg"></span>
+    
     <fieldset id="recipient">
       <legend>Recipient Details</legend>
       
