@@ -46,6 +46,13 @@ function validateInput(id) {
                 isValid = true;
             }
             break;
+        case "badge-issuer":
+            if (inputField.value !== "http://openbadges.corductive.uk/issuerOrganisation.json") {
+                inputFieldError.innerHTML = "Please use the default value during testing";
+            } else {
+                isValid = true;
+            }
+            break;
         case "import-recipients":
             if (inputField.file) {
                 inputFieldError.innerHTML = "No file attached";
@@ -104,8 +111,7 @@ function validateBadge() {
 function validateRecipient() {
     /* If not valid import, validate recipient details */
     if (!validateInput("import-recipients")) {
-        if (!validateInput("recipient-name")) { return false; }
-        if (!validateInput("recipient-email")) { return false; }
+        if (!validateInput("recipient-name") || !validateInput("recipient-email")) { return false; }
     }
     
     return true;
@@ -134,7 +140,16 @@ function validateForm() {
         formError.style.display = "block";
         return false;
     }
+    
+    var form = document.getElementById("badge-form");
+    if (document.getElementById("import-recipients").value) {
+        console.log("Importing");
+        google.script.run.withFailureHandler(function (err) {
+            console.log("Bulk badge issuing failed " + err);
+        }).withSuccessHandler(function (response) {
+            console.log("Filename: " + response);
+        }).uploadFile(form);
+    }
     console.log("Form submitted");
-    //return false; // for testing
 }
 

@@ -1,20 +1,33 @@
-//var res = ["first badge", "second badge"];     // for testing only
-
 function fillSelect() {
     var select = document.getElementById("badge-selector");
-
+    var selectedBadge = select.value;
+    console.log("selected badge: " + selectedBadge);
+    
     /* First clear the options */
     while (select.hasChildNodes()) {
         select.removeChild(select.firstChild);
     }
 
+    /* Add a prompt as the first option */
+    var prompt = document.createElement("option");
+    prompt.text = "Please choose";
+    prompt.value = "Please choose";
+    prompt.disabled = true;
+    select.add(prompt, 0);
+    select.selectedIndex = 0;    
+    
+    /* Now add badges from server */
     google.script.run.withSuccessHandler(function (res) {
         for (badge in res) {
             var option = document.createElement("option");
             option.text = res[badge];
+            option.value = res[badge];
             select.add(option);
-        }
-    }).getBadges();
+            if (option.text === selectedBadge) {
+                select.selectedIndex = badge + 1;   // we add one for the "please choose" option
+            }
+        }    
+    }).getListOfBadges();
 }
 
 function updateSelect() {
@@ -34,9 +47,8 @@ function createBadge() {
            errorMsg.style.display = "block"; 
         }).withSuccessHandler(function (res) {
             console.log("createBadge returned: " + res);
-            // res.unshift(badgeData.name);       // for testing only
             showAddNew(false);
-        }).createBadge(badgeData);
+        }).createBadgeFromJson(badgeData);
         return true; 
     }    
 }
@@ -73,6 +85,8 @@ function showFieldset(fieldset, doShow) {
         inputs[i]["required"] = doShow;
         inputs[i].value = "";
     }
+    
+    document.getElementById("badge-issuer").value = "http://openbadges.corductive.uk/issuerOrganisation.json";
     
     /* Hide the error messages */
     var errors = fieldset.querySelectorAll(".error-msg");

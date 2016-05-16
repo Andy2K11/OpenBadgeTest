@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        function listen() {
+            var select = document.getElementById("select");
+            var target = document.getElementById("target");
+            target.innerHTML = select.text;
+        }
+        
+    </script>
+</head>
+<body>
+    <select name="" id="select" onchange="listen()">
+        <option value="default">Please select</option>
+        <option value="one">First option</option>
+        <option value="two">Second option</option>
+    </select>
+    <p id="target">No message</p>
+</body>
+</html>
