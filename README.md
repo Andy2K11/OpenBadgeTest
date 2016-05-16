@@ -3,7 +3,7 @@ Testing Open Badges v1.1
 
 https://github.com/openbadges/openbadges-specification
 
-https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBUzyVgWLe8K2P/exec
+https://script.google.com/macros/s/AKfycbwhWomQjaALphGQ1JeSQhfO0VsaZxYBRl-xnEWp328wB4wFlg_T/exec
 
 
 ## Google Spreadsheet Headers
@@ -15,8 +15,8 @@ https://script.google.com/macros/s/AKfycbyzCKQzMrluXPts1NaYE2KHUzK9t7ov4FZWrPbBU
 * Recipient Name
 * Recipient Email
 * Expiration Date
-* Unique ID
 * Evidence
+* Unique ID
 
 ### BADGES sheet
 
