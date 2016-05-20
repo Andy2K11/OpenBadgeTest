@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>UCS Open Badges</title>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>-->
+    <script src="https://backpack.openbadges.org/issuer.js"></script>
+    <script src="openbadges.js"></script>
+    <link rel="stylesheet" href="default.css">
+    
+</head>
+
+<body>
+    <h1>UCS Open Badges</h1>
+    <nav>
+        <li><a href="http://www.ucs.ac.uk">UCS Home</a></li>&nbsp|
+        <li><a href="http://libguides.ucs.ac.uk"> LibGuides</a></li>
+    </nav>
+    <main>
+        <h2>Collect Your Badge</h2>
+        <p>Choose how you would like to recieve your badge</p>
+        <button id="b1" type='submit' onclick='doIssue();' 
+            title="This will bake your badge and place it in your backpack">Issue to Mozilla Backpack</button><br>
+        <button id="b2" type='submit' onclick='location.href=doBake();' 
+            title="Uses the Baker REST API">Download your badge</button>
+        <br>
+        <p>Once you've downloaded your (baked) badge you can keep hold of it or upload it to an open badges store.</p>
+        <p>A good alternative to <a href="https://backpack.openbadges.org/backpack/login">Mozilla's Backpack</a> is the 
+            <a href="https://openbadgepassport.com/en/badges/upload">Open Badge Passport</a>
+        </p> 
+    </main>
+    
+</body>
+
+</html>

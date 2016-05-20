@@ -53,7 +53,7 @@ to qualify for this badge</span>
       
       <label for="badge-issuer">Issuing Organisation</label>
       <input type="url" name="badgeissuer" id="badge-issuer" onblur="validateInput('badge-issuer')" 
-          value="http://openbadges.corductive.uk/issuerOrganisation.json">
+          value="http://www.ucslearningservices.co.uk/openbadges/issuerOrganisation.json">
       <span>Use the default value (testing)</span>
       <span id="badge-issuer-error" class="error-msg"></span>
       
@@ -73,12 +73,12 @@ to qualify for this badge</span>
       <legend>Recipient Details</legend>
       
       <label for="recipient-name">Name</label>
-      <input type="text" id="recipient-name" name="name" required>
+      <input type="text" id="recipient-name" name="name" onblur="validateInput('recipient-name')" required>
       <span>What is the recipient's name?</span>
       <span id="recipient-name-error" class="error-msg"></span>
 
       <label for="recipient-email">Email</label>
-      <input type="text" id="recipient-email" name="email" required>
+      <input type="text" id="recipient-email" name="email" onblur="validateInput('recipient-email')" required>
       <span>Please enter the full email address e.g. studentname@example.ac.uk</span>
       <span id="recipient-email-error" class="error-msg"></span>
     </fieldset>
@@ -87,12 +87,12 @@ to qualify for this badge</span>
       <legend>Badge Assertions (optional)</legend>
       
       <label for="assertion-evidence">Evidence</label>
-      <input type="url" id="assertion-evidence" name="evidence">
+      <input type="url" id="assertion-evidence" name="evidence" onblur="validateInput('assertion-evidence')">
       <span>The URL to a page showing the recipients work in earning this badge.</span>
       <span id="assertion-evidence-error" class="error-msg"></span>
       
       <label for="assertion-expiration">Expires</label>
-      <input type="date" id="assertion-expiration" name="expiration">
+      <input type="date" id="assertion-expiration" name="expiration" onblur="validateInput('assertion-expiration')">
       <span>Date the badge assertion is valid until. (revokation not currently supported)</span>
       <span id="assertion-expiration-error" class="error-msg"></span>
     </fieldset>

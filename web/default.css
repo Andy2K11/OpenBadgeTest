@@ -1,0 +1,25 @@
+body, main {
+    font-family: Arial,Helvetica,Verdana;
+    margin: 0 20px;
+}
+
+nav {
+    background: darkgrey;
+    padding: 5px 0;
+    color: white;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav li {
+    display: inline-block;
+    list-style: none;
+    padding: 0 20px;
+}
+
+button {
+    margin: 10px;
+}

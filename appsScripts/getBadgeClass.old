@@ -1,5 +1,5 @@
 function buildBadgeJson(badgeName) {
-  var badgeSheet = testSpreadsheet.getSheetByName('BADGES');
+  var badgeSheet = SpreadsheetApp.openById(ScriptProperties.getProperty('test')).getSheetByName('BADGES');
   var badgeNamesArray = badgeSheet.getRange(2, 1, badgeSheet.getLastRow(),badgeSheet.getLastColumn());
   Logger.log("badgeNamesArray: " + badgeNamesArray);
   var row = 0;

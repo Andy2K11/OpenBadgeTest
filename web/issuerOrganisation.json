@@ -1,0 +1,7 @@
+{
+    "@context": "https://w3id.org/openbadges/v1",
+    "id": "http://www.ucslearningservices.co.uk/openbadges/issuerOrganisation.json",
+    "type": "IssuerOrg",
+    "name": "UCS",
+    "url": "http://www.ucs.ac.uk"
+}

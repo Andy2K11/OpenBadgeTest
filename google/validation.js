@@ -13,6 +13,11 @@
  * }
  */
 function validateInput(id) {
+    var urlPattern = /^http\:\/\//;
+    var pngPattern = /\.png$/;
+    var jsonPatter = /\.json$/;
+    var emailPattern = /\@ucs\.ac\.uk$/;
+    
     var inputField = document.getElementById(id);
     var inputFieldError = document.getElementById(id+"-error");
     var isValid = false;
@@ -35,6 +40,10 @@ function validateInput(id) {
         case "badge-image":
             if (!inputField.value.length) {
                 inputFieldError.innerHTML = "Please enter location of badge image";
+            } else if (!pngPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Image must be of type png e.g. http://www.example.com/image.png";
+            } else if (!urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/image.png";
             } else {
                 isValid = true;
             }
@@ -42,6 +51,8 @@ function validateInput(id) {
         case "badge-criteria":
             if (!inputField.value.length) {
                 inputFieldError.innerHTML = "Please enter location of badge criteria";
+            } else if (!urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/criteria.html";
             } else {
                 isValid = true;
             }
@@ -49,6 +60,10 @@ function validateInput(id) {
         case "badge-issuer":
             if (inputField.value !== "http://openbadges.corductive.uk/issuerOrganisation.json") {
                 inputFieldError.innerHTML = "Please use the default value during testing";
+            } else if (!urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/issuerOrg.json";
+            } else if (!jsonPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/issuerOrg.json";
             } else {
                 isValid = true;
             }
@@ -70,11 +85,27 @@ function validateInput(id) {
         case "recipient-email":
             if (!inputField.value.length) {
                 inputFieldError.innerHTML = "Enter recipient's email";
+            } else if (!emailPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Must be an @ucs.ac.uk email address";
             } else {
                 isValid = true;
             }
             break;
-        default:
+        case "assertion-evidence":
+            if (inputField.value.length && !urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/evidence.html";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "assertion-expiration":
+            if (false) {
+                // nothing yet
+            } else {
+                isValid = true;
+            }
+            break;
+        default :
             console.log("Could not validate input with id " + id);
             break;
     }

@@ -8,7 +8,7 @@ function buildBadgeJson(badgeName) {
     "description": "",
     "image": "",
     "criteria": "",
-    "issuer": "http://openbadges.corductive.uk/issuerOrganisation.json"
+    "issuer": "http://www.ucslearningservices.co.uk/openbadges/issuerOrganisation.json"
   };
   
   var badgeSheet = SpreadsheetApp.openById(ScriptProperties.getProperty('test')).getSheetByName('BADGES');

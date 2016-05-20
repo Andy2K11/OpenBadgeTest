@@ -22,12 +22,11 @@ function buildAssertionJson(claimCodeEncoded) {
       "hashed": true,
       "salt": salt
     },
-    //"image": "http://openbadges.corductive.uk/testBadge.png",  // needs to be baked?
-    "evidence": "http://openbadges.corductive.uk/index.html",
+    //"image": "",  // needs to be baked?
+    "evidence": "",
     "badge": "",
     "verify": {
       "type": "hosted",
-      //"url": "http://openbadges.corductive.uk/doNotUse_rsa.pub"
       "url": ""
     },
     "issuedOn": "1979-01-01"
