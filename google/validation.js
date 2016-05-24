@@ -13,7 +13,7 @@
  * }
  */
 function validateInput(id) {
-    var urlPattern = /^http\:\/\//;
+    var urlPattern = /^https?\:\/\//;
     var pngPattern = /\.png$/;
     var jsonPatter = /\.json$/;
     var emailPattern = /\@ucs\.ac\.uk$/;
@@ -162,10 +162,8 @@ function validateForm() {
             return false;
         }
     }
-    
-    var password = "secret";
-    
-    if (!validateRecipient() || password !== "secret") {
+        
+    if (!validateRecipient()) {
         console.log("Validation failed");
         var formError = document.getElementById("form-error");
         formError.style.display = "block";
@@ -177,6 +175,7 @@ function validateForm() {
         console.log("Importing");
         google.script.run.withFailureHandler(function (err) {
             console.log("Bulk badge issuing failed " + err);
+            return false;
         }).withSuccessHandler(function (response) {
             console.log("Filename: " + response);
         }).uploadFile(form);

@@ -1,0 +1,30 @@
+{
+  "name": "openbadgetest",
+  "version": "1.1.0",
+  "description": "Open Badges Issuer",
+  "main": "README.md",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-nunjucks-html": "^2.0.0",
+    "gulp-rename": "^1.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andy2K11/OpenBadgeTest.git"
+  },
+  "keywords": [
+    "Open",
+    "Badges"
+  ],
+  "author": "Andy2K11",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Andy2K11/OpenBadgeTest/issues"
+  },
+  "homepage": "https://github.com/Andy2K11/OpenBadgeTest#readme"
+}

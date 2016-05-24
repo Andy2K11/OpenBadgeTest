@@ -1,7 +1,7 @@
 {
     "@context": "https://w3id.org/openbadges/v1",
-    "id": "http://openbadges.corductive.uk/issuerOrganisation.json",
+    "id": "http://openbadges.example.uk/issuerOrganisation.json",
     "type": "IssuerOrg",
-    "name": "Corductive",
-    "url": "http://corductive.uk"
+    "name": "Example",
+    "url": "http://example.uk"
 }

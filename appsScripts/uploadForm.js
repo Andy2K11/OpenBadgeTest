@@ -6,14 +6,15 @@ function uploadFile(form) {
   var expires = form.expiration;
   var evidence = form.evidence;
   var blob = form.import;
-  if (blob) {
+  var password = form.password;
+  if (password === "secret" && blob) {
     var fileString = blob.getDataAsString();
     var fileArray = fileString.split("\n");
     var uids = [];
     // last element is length property? first is header.
     for (line = fileArray.length - 1; --line; ) {
       var lineArray = fileArray[line].split(",");
-      var uid = addAssertion(badgeName, lineArray[0], lineArray[1], expires);
+      var uid = addAssertion(badgeName, lineArray[0], lineArray[1], expires, evidence);
       uids.push(uid);
     }
     Logger.log("UIDs " + uids);

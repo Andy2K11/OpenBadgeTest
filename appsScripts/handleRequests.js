@@ -13,7 +13,7 @@ function doPost(request) {
     if (request.parameter.import) {
       var import = request.parameter.import;
       return ContentService.createTextOutput('Processing file upload request');
-    } else if (badgeName) {
+    } else if (badgeName && request.parameter.password === "secret") {
         /* addPostedAssertion */
         var uid = addAssertion(badgeName, request.parameter.name, request.parameter.email, request.parameter.expiration, request.parameter.evidence);
         /*

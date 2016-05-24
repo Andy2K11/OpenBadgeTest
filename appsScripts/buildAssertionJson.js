@@ -59,6 +59,7 @@ function buildAssertionJson(claimCodeEncoded) {
   var badgeName = response.getRange(row, 2).getValue();
   var email = response.getRange(row, 4).getValue();
   var expires = response.getRange(row, 5).getValue();
+  var evidence = response.getRange(row, 6).getValue();
  
   /*
    * Hosted assertion must match assertion passed here (same file so it should) but google urls must be 
@@ -75,6 +76,7 @@ function buildAssertionJson(claimCodeEncoded) {
   if (expires.length) {
     badgeAssertion.expires = Utilities.formatDate(expires, "GMT", "yyyy-MM-dd");
   }
+  badgeAssertion.evidence = evidence;
   
   return badgeAssertion;
 }

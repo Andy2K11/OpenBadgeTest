@@ -56,8 +56,7 @@ function createBadge() {
 function importRecipients() {
     var recipient = document.getElementById("recipient");
     var importfile = document.getElementById("import-recipients");
-    
-    showFieldset(recipient, !importfile.value)
+    showFieldset(recipient, !importfile.value);
 }
 
 /*
