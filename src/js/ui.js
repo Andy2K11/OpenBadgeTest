@@ -42,7 +42,7 @@ function updateSelect() {
 function createBadge() {
     if (badgeData = validateBadge()) {
         google.script.run.withFailureHandler(function (err) {
-           var errorMsg = document.getElementById("form-error");
+           var errorMsg = document.getElementByClassName("form-error");
            errorMsg.innerHTML = "Server returned error when creating badge  " + err;
            errorMsg.style.display = "block"; 
         }).withSuccessHandler(function (res) {

@@ -1,0 +1,26 @@
+/*
+ * Define colours from UCS style guide
+ */
+$ucs-orange: hsl(26, 90.6%, 54.1%); // #F47C20
+$ucs-blue: hsl(191, 100%, 39.0%);   // #00A2C7
+$ucs-pink: hsl(325, 100%, 46.3%);   // #EC008A
+$ucs-green: hsl(96, 49.6%, 51.0%);  // #76C044
+$ucs-purple: hsl(244, 31%, 55%);    // #6C67AF
+$ucs-yellow: hsl(40, 97%, 54%);     // #FBAF17
+$ucs-grey: hsl(201, 10%, 27%);      // #3D464B
+$ucs-black: hsl(340, 4%, 13%);      // #232021
+
+$error: red;
+
+/*
+ * Define fonts
+ */
+$ucs-font: Arial, Sans-serif;
+ 
+/*
+ * Imports
+ */ 
+
+@import 'style';
+
+@import 'layout';

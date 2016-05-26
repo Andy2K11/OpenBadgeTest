@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="keywords" content="Open Badges">
+  <script>
+    /*
+CryptoJS v3.1.2
+code.google.com/p/crypto-js
+(c) 2009-2013 by Jeff Mott. All rights reserved.
+code.google.com/p/crypto-js/wiki/License
+*/
+var CryptoJS=CryptoJS||function(g,j){var e={},d=e.lib={},m=function(){},n=d.Base={extend:function(a){m.prototype=this;var c=new m;a&&c.mixIn(a);c.hasOwnProperty("init")||(c.init=function(){c.$super.init.apply(this,arguments)});c.init.prototype=c;c.$super=this;return c},create:function(){var a=this.extend();a.init.apply(a,arguments);return a},init:function(){},mixIn:function(a){for(var c in a)a.hasOwnProperty(c)&&(this[c]=a[c]);a.hasOwnProperty("toString")&&(this.toString=a.toString)},clone:function(){return this.init.prototype.extend(this)}},
+q=d.WordArray=n.extend({init:function(a,c){a=this.words=a||[];this.sigBytes=c!=j?c:4*a.length},toString:function(a){return(a||l).stringify(this)},concat:function(a){var c=this.words,p=a.words,f=this.sigBytes;a=a.sigBytes;this.clamp();if(f%4)for(var b=0;b<a;b++)c[f+b>>>2]|=(p[b>>>2]>>>24-8*(b%4)&255)<<24-8*((f+b)%4);else if(65535<p.length)for(b=0;b<a;b+=4)c[f+b>>>2]=p[b>>>2];else c.push.apply(c,p);this.sigBytes+=a;return this},clamp:function(){var a=this.words,c=this.sigBytes;a[c>>>2]&=4294967295<<
+32-8*(c%4);a.length=g.ceil(c/4)},clone:function(){var a=n.clone.call(this);a.words=this.words.slice(0);return a},random:function(a){for(var c=[],b=0;b<a;b+=4)c.push(4294967296*g.random()|0);return new q.init(c,a)}}),b=e.enc={},l=b.Hex={stringify:function(a){var c=a.words;a=a.sigBytes;for(var b=[],f=0;f<a;f++){var d=c[f>>>2]>>>24-8*(f%4)&255;b.push((d>>>4).toString(16));b.push((d&15).toString(16))}return b.join("")},parse:function(a){for(var c=a.length,b=[],f=0;f<c;f+=2)b[f>>>3]|=parseInt(a.substr(f,
+2),16)<<24-4*(f%8);return new q.init(b,c/2)}},k=b.Latin1={stringify:function(a){var c=a.words;a=a.sigBytes;for(var b=[],f=0;f<a;f++)b.push(String.fromCharCode(c[f>>>2]>>>24-8*(f%4)&255));return b.join("")},parse:function(a){for(var c=a.length,b=[],f=0;f<c;f++)b[f>>>2]|=(a.charCodeAt(f)&255)<<24-8*(f%4);return new q.init(b,c)}},h=b.Utf8={stringify:function(a){try{return decodeURIComponent(escape(k.stringify(a)))}catch(b){throw Error("Malformed UTF-8 data");}},parse:function(a){return k.parse(unescape(encodeURIComponent(a)))}},
+u=d.BufferedBlockAlgorithm=n.extend({reset:function(){this._data=new q.init;this._nDataBytes=0},_append:function(a){"string"==typeof a&&(a=h.parse(a));this._data.concat(a);this._nDataBytes+=a.sigBytes},_process:function(a){var b=this._data,d=b.words,f=b.sigBytes,l=this.blockSize,e=f/(4*l),e=a?g.ceil(e):g.max((e|0)-this._minBufferSize,0);a=e*l;f=g.min(4*a,f);if(a){for(var h=0;h<a;h+=l)this._doProcessBlock(d,h);h=d.splice(0,a);b.sigBytes-=f}return new q.init(h,f)},clone:function(){var a=n.clone.call(this);
+a._data=this._data.clone();return a},_minBufferSize:0});d.Hasher=u.extend({cfg:n.extend(),init:function(a){this.cfg=this.cfg.extend(a);this.reset()},reset:function(){u.reset.call(this);this._doReset()},update:function(a){this._append(a);this._process();return this},finalize:function(a){a&&this._append(a);return this._doFinalize()},blockSize:16,_createHelper:function(a){return function(b,d){return(new a.init(d)).finalize(b)}},_createHmacHelper:function(a){return function(b,d){return(new w.HMAC.init(a,
+d)).finalize(b)}}});var w=e.algo={};return e}(Math);
+(function(){var g=CryptoJS,j=g.lib,e=j.WordArray,d=j.Hasher,m=[],j=g.algo.SHA1=d.extend({_doReset:function(){this._hash=new e.init([1732584193,4023233417,2562383102,271733878,3285377520])},_doProcessBlock:function(d,e){for(var b=this._hash.words,l=b[0],k=b[1],h=b[2],g=b[3],j=b[4],a=0;80>a;a++){if(16>a)m[a]=d[e+a]|0;else{var c=m[a-3]^m[a-8]^m[a-14]^m[a-16];m[a]=c<<1|c>>>31}c=(l<<5|l>>>27)+j+m[a];c=20>a?c+((k&h|~k&g)+1518500249):40>a?c+((k^h^g)+1859775393):60>a?c+((k&h|k&g|h&g)-1894007588):c+((k^h^
+g)-899497514);j=g;g=h;h=k<<30|k>>>2;k=l;l=c}b[0]=b[0]+l|0;b[1]=b[1]+k|0;b[2]=b[2]+h|0;b[3]=b[3]+g|0;b[4]=b[4]+j|0},_doFinalize:function(){var d=this._data,e=d.words,b=8*this._nDataBytes,l=8*d.sigBytes;e[l>>>5]|=128<<24-l%32;e[(l+64>>>9<<4)+14]=Math.floor(b/4294967296);e[(l+64>>>9<<4)+15]=b;d.sigBytes=4*e.length;this._process();return this._hash},clone:function(){var e=d.clone.call(this);e._hash=this._hash.clone();return e}});g.SHA1=d._createHelper(j);g.HmacSHA1=d._createHmacHelper(j)})();
+(function(){var g=CryptoJS,j=g.enc.Utf8;g.algo.HMAC=g.lib.Base.extend({init:function(e,d){e=this._hasher=new e.init;"string"==typeof d&&(d=j.parse(d));var g=e.blockSize,n=4*g;d.sigBytes>n&&(d=e.finalize(d));d.clamp();for(var q=this._oKey=d.clone(),b=this._iKey=d.clone(),l=q.words,k=b.words,h=0;h<g;h++)l[h]^=1549556828,k[h]^=909522486;q.sigBytes=b.sigBytes=n;this.reset()},reset:function(){var e=this._hasher;e.reset();e.update(this._iKey)},update:function(e){this._hasher.update(e);return this},finalize:function(e){var d=
+this._hasher;e=d.finalize(e);d.reset();return d.finalize(this._oKey.clone().concat(e))}})})();
+(function(){var g=CryptoJS,j=g.lib,e=j.Base,d=j.WordArray,j=g.algo,m=j.HMAC,n=j.PBKDF2=e.extend({cfg:e.extend({keySize:4,hasher:j.SHA1,iterations:1}),init:function(d){this.cfg=this.cfg.extend(d)},compute:function(e,b){for(var g=this.cfg,k=m.create(g.hasher,e),h=d.create(),j=d.create([1]),n=h.words,a=j.words,c=g.keySize,g=g.iterations;n.length<c;){var p=k.update(b).finalize(j);k.reset();for(var f=p.words,v=f.length,s=p,t=1;t<g;t++){s=k.finalize(s);k.reset();for(var x=s.words,r=0;r<v;r++)f[r]^=x[r]}h.concat(p);
+a[0]++}h.sigBytes=4*c;return h}});g.PBKDF2=function(d,b,e){return n.create(e).compute(d,b)}})();
+
+
+    function fillSelect() {
+    var select = document.getElementById("badge-selector");
+    var selectedBadge = select.value;
+    console.log("selected badge: " + selectedBadge);
+    
+    /* First clear the options */
+    while (select.hasChildNodes()) {
+        select.removeChild(select.firstChild);
+    }
+
+    /* Add a prompt as the first option */
+    var prompt = document.createElement("option");
+    prompt.text = "Please choose";
+    prompt.value = "Please choose";
+    prompt.disabled = true;
+    select.add(prompt, 0);
+    select.selectedIndex = 0;    
+    
+    /* Now add badges from server */
+    google.script.run.withSuccessHandler(function (res) {
+        for (badge in res) {
+            var option = document.createElement("option");
+            option.text = res[badge];
+            option.value = res[badge];
+            select.add(option);
+            if (option.text === selectedBadge) {
+                select.selectedIndex = badge + 1;   // we add one for the "please choose" option
+            }
+        }    
+    }).getListOfBadges();
+}
+
+function updateSelect() {
+    var select = document.getElementById("badge-selector");
+    var badgeName = document.getElementById("badge-name");
+    var option = document.createElement("option");
+    option.text = badgeName.value;
+    select.add(option, 0);
+    select.selectedIndex = 0;
+}
+
+function createBadge() {
+    if (badgeData = validateBadge()) {
+        google.script.run.withFailureHandler(function (err) {
+           var errorMsg = document.getElementByClassName("form-error");
+           errorMsg.innerHTML = "Server returned error when creating badge  " + err;
+           errorMsg.style.display = "block"; 
+        }).withSuccessHandler(function (res) {
+            console.log("createBadge returned: " + res);
+            showAddNew(false);
+        }).createBadgeFromJson(badgeData);
+        return true; 
+    }    
+}
+
+function importRecipients() {
+    var recipient = document.getElementById("recipient");
+    var importfile = document.getElementById("import-recipients");
+    showFieldset(recipient, !importfile.value);
+}
+
+/*
+ * Show or hide the add new badges fieldset
+ * If hiding reset the badge selector
+ */
+function showAddNew(doShow) {
+    var addnew = document.getElementById("addnew");
+    showFieldset(addnew, doShow);
+    if (!doShow) {
+        fillSelect();
+    }
+}
+
+/*
+ * Shows or hides a fieldset making the required attributes for each
+ * input match it's visibility.
+ */
+function showFieldset(fieldset, doShow) {
+    doShow ? fieldset.style.display = "block" : fieldset.style.display = "none";
+    var inputs = fieldset.querySelectorAll("input, textarea");
+
+    // This is an efficient method for iterating through a NodeList https://developer.mozilla.org/en-US/docs/Web/API/NodeList
+    for (var i = inputs.length; i--; ) {
+        inputs[i]["required"] = doShow;
+        inputs[i].value = "";
+    }
+    
+    document.getElementById("badge-issuer").value = "http://openbadges.corductive.uk/issuerOrganisation.json";
+    
+    /* Hide the error messages */
+    var errors = fieldset.querySelectorAll(".error-msg");
+    for (var i = errors.length; i--; ) {
+        errors[i].style["display"] = "none";
+    }  
+}
+
+window.addEventListener('load', fillSelect);
+
+    /*
+ * Validates any input with given id
+ * 
+ * Each switch statement contains the validation criteria for that element
+ * The if statements take the form:
+ * 
+ * If (Failed for reason A) {
+ *  show error message A
+ * } else if (failed for reason B) {
+ *  show error message B
+ * } else {
+ *  passed all tests
+ * }
+ */
+function validateInput(id) {
+    var urlPattern = /^https?\:\/\//;
+    var pngPattern = /\.png$/;
+    var jsonPatter = /\.json$/;
+    var emailPattern = /\@.*\..*$/;
+    
+    var inputField = document.getElementById(id);
+    var inputFieldError = document.getElementById(id+"-error");
+    var isValid = false;
+    switch (id) {
+        case "badge-name":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Badge name required";    
+            } else {
+                updateSelect();
+                isValid = true;
+            }
+            break;
+        case "badge-desc":
+            if (inputField.value.length < 10) {
+                inputFieldError.innerHTML = "Description must be at least 10 characters";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "badge-image":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Please enter location of badge image";
+            } else if (!pngPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Image must be of type png e.g. http://www.example.com/image.png";
+            } else if (!urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/image.png";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "badge-criteria":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Please enter location of badge criteria";
+            } else if (!urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/criteria.html";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "badge-issuer":
+            if (inputField.value !== "http://openbadges.corductive.uk/issuerOrganisation.json") {
+                inputFieldError.innerHTML = "Please use the default value during testing";
+            } else if (!urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/issuerOrg.json";
+            } else if (!jsonPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/issuerOrg.json";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "import-recipients":
+            if (inputField.file) {
+                inputFieldError.innerHTML = "No file attached";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "recipient-name":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Enter recipient's name";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "recipient-email":
+            if (!inputField.value.length) {
+                inputFieldError.innerHTML = "Enter recipient's email";
+            } else if (!emailPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Must be an @ucs.ac.uk email address";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "assertion-evidence":
+            if (inputField.value.length && !urlPattern.test(inputField.value)) {
+                inputFieldError.innerHTML = "Enter a fully qualified URL e.g. http://www.example.com/evidence.html";
+            } else {
+                isValid = true;
+            }
+            break;
+        case "assertion-expiration":
+            if (false) {
+                // nothing yet
+            } else {
+                isValid = true;
+            }
+            break;
+        default :
+            console.log("Could not validate input with id " + id);
+            break;
+    }
+    
+    if (isValid) {
+        inputFieldError.style.display = "none";
+        return inputField.value;
+    } else {
+        inputFieldError.style.display = "block";
+        return false;
+    }
+}
+
+/*
+ * Checks each memeber of the badges fieldset displaying all error messages before
+ * returning
+ */
+function validateBadge() {
+    var badgeData = {};
+    var isValid = true;
+    if (!(badgeData.name = validateInput("badge-name"))) { isValid = false; }
+    if (!(badgeData.description = validateInput("badge-desc"))) { isValid = false; }
+    if (!(badgeData.image = validateInput("badge-image"))) { isValid = false; }
+    if (!(badgeData.criteria = validateInput("badge-criteria"))) { isValid = false; }
+    
+    if (isValid) {
+        return badgeData;    
+    } else {
+        return false;
+    }
+    
+}
+
+function validateRecipient() {
+    /* If not valid import, validate recipient details */
+    if (!validateInput("import-recipients")) {
+        if (!validateInput("recipient-name") || !validateInput("recipient-email")) { return false; }
+    }
+    
+    return true;
+}
+
+/*
+ * When user submits form, checks if it's valid before posting data
+ */
+function validateForm() {
+    var submitBtn = document.getElementById("issue");
+    submitBtn.disabled = true;
+    
+    var formError = document.getElementsByClassName("form-error");
+    
+    
+    
+    /*
+     * Is user creating a new badge or have they selected an existing one
+     * NB: If they've already explicitly create a new one then the fieldset
+     * will be hidden and the new badge selected.
+     */
+    if (document.getElementById("addnew").style.display === "block") {
+        if (!createBadge()) {
+            formError.style.display = "block";
+            submitBtn.disabled = false;
+            return false;
+        }
+    }
+        
+    if (!validateRecipient()) {
+        console.log("Validation failed");
+        formError.style.display = "block";
+        submitBtn.disabled = false;
+        return false;
+    }
+    
+    var password = document.getElementById("password");
+    
+    google.script.run.withFailureHandler( function (err) {
+        for (i = formError.length; i--; ) {
+            formError[i].style.display = "block";
+        }
+        submitBtn.disabled = false;
+        console.log("password error");
+        return false;
+    }).checkPassord(password.value);
+        
+    var form = document.getElementById("badge-form");
+    if (document.getElementById("import-recipients").value) {
+        console.log("Importing");
+        google.script.run.withFailureHandler(function (err) {
+            console.log("Bulk badge issuing failed " + err);
+            submitBtn.disabled = false;
+            return false;
+        }).withSuccessHandler(function (response) {
+            console.log("Filename: " + response);
+        }).uploadFile(form);
+    }
+    
+    console.log("Form submitted");
+}
+
+
+  </script>
+  <style>
+    /*
+ * Define colours from UCS style guide
+ */
+/*
+ * Define fonts
+ */
+/*
+ * Imports
+ */
+body {
+  background: #bec6ca; }
+
+header {
+  background: #fff5e1; }
+
+fieldset {
+  background: #e9ebed; }
+
+h1 {
+  color: #53892e; }
+
+#addnew {
+  display: none; }
+
+label {
+  font-weight: bold; }
+
+legend {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: #2ed9ff;
+  color: black; }
+
+.error-msg {
+  color: red;
+  font-weight: bold;
+  padding-left: 10px; }
+
+.form-error {
+  display: none; }
+
+button, input[type='file'], select {
+  font-size: 1.2em; }
+
+footer {
+  margin: 0;
+  background: #556168;
+  padding: 10px; }
+
+footer * {
+  color: #61e2ff;
+  text-decoration: none; }
+
+body {
+  margin: 0 auto;
+  padding: 0; }
+
+header {
+  margin: 0;
+  padding: 5px 25px;
+  width: 100%; }
+
+main {
+  margin: 5px 0;
+  padding: 5px;
+  width: calc(100% - 10px); }
+
+label {
+  margin: 10px 0 3px 0; }
+
+label, input:not(#password), textarea {
+  display: block;
+  width: 100%; }
+
+#badge-selector {
+  min-width: 300px;
+  display: block;
+  margin-bottom: 10px; }
+
+#import-recipients {
+  margin-bottom: 10px; }
+
+button {
+  margin: 10px 0; }
+
+fieldset > span {
+  display: inline-block; }
+
+fieldset {
+  margin: 20px 5px; }
+
+.lone {
+  margin: 0 20px; }
+
+#issue {
+  margin: 20px 20px;
+  width: calc(100% - 40px); }
+
+footer {
+  clear: both;
+  margin: 10px 0;
+  text-align: center; }
+
+@media only screen and (min-width: 680px) {
+  body {
+    max-width: 660px; }
+  #issue {
+    width: initial;
+    float: right;
+    position: relative;
+    top: -20px; } }
+
+  </style>
+</head>
+
+<body>
+    <header>
+        <h1>UCS Open Badges Issuer</h1>
+        <h2>Specification v1.1</h2>
+    </header>
+    <main>
+        <p class="form-error error-msg">Your form contains errors</p>
+    
+        <form id="badge-form" action="https://script.google.com/macros/s/AKfycbwhWomQjaALphGQ1JeSQhfO0VsaZxYBRl-xnEWp328wB4wFlg_T/exec"
+                onsubmit="return validateForm();" method="post">
+            <fieldset>
+                <legend>Badge Options</legend>
+                <label for="badge-selector">Select Badge</label>
+                <select id="badge-selector" name="selectedbadge" value="Choose badge" required>
+                </select>
+
+                <button type="button" onclick="showAddNew(true);">Add New</button><br>
+            </fieldset>
+            
+            <fieldset id="addnew">
+                <legend>Add New Badge</legend>
+
+                <label for="badge-name">Name</label>
+                <input type="text" name="badgename" id="badge-name" onblur="validateInput('badge-name')">
+                <span>Please enter a name for your badge</span>
+                <span id="badge-name-error" class="error-msg"></span>
+
+                <label for="badge-desc">Description</label>
+                <textarea type="text" name="badgedesc" id="badge-desc" onblur="validateInput('badge-desc')"></textarea>
+                <span>Please enter a description for your badge</span>
+                <span id="badge-desc-error" class="error-msg"></span>
+                
+                <label for="badge-image">Image</label>
+                <input type="url" name="badgeimage" id="badge-image" onblur="validateInput('badge-image')"
+                    placeholder="http://www.ucs.ac.uk/openbadge/badgeimages/AMC_P.png">
+                <span>The image must be a fully qualified url of type png</span>
+                <span id="badge-image-error" class="error-msg"></span>
+
+                <label for="badge-criteria">Criteria</label>
+                <input type="url" name="badgecriteria" id="badge-criteria" onblur="validateInput('badge-criteria')"
+                    placeholder="http://www.ucs.ac.uk/openbadge/AMC-Development-Day.aspx">
+                <span>This must be a fully qualified url to a statement describing what the learner will have to achieve
+                    to qualify for this badge</span>
+                <span id="badge-criteria-error" class="error-msg"></span>
+                
+                <label for="badge-issuer">Issuing Organisation</label>
+                <input type="url" name="badgeissuer" id="badge-issuer" onblur="validateInput('badge-issuer')" 
+                    value="http://www.ucslearningservices.co.uk/openbadges/issuerOrganisation.json">
+                <span>Use the default value (testing)</span>
+                <span id="badge-issuer-error" class="error-msg"></span>
+                
+                <br>
+                <button type="button" onclick="createBadge()">Create Badge</button>
+                <button type="button" onclick="showAddNew(false);">Cancel</button><br>
+                <p>Alignment and Tags properties not currently available. 
+                See <a href="https://openbadgespec.org/#BadgeClass" target="_blank">Open Badges Spec</a> for more info.</p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Upload CSV File (optional)</legend>
+                <label for="import">Import Recipient's Details</label>
+                <input id="import-recipients" type="file" onchange="importRecipients();" accept=".csv" name="import">
+                <span>Accepts a standard csv file. First row is assumed to be the header [Name, Email].</span>
+                <span id="import-recipients-error" class="error-msg"></span>
+            </fieldset>
+            
+            <fieldset id="recipient">
+                <legend>Recipient Details</legend>
+                
+                <label for="recipient-name">Name</label>
+                <input type="text" id="recipient-name" name="name" onblur="validateInput('recipient-name')" required>
+                <span>What is the recipient's name?</span>
+                <span id="recipient-name-error" class="error-msg"></span>
+
+                <label for="recipient-email">Email</label>
+                <input type="text" id="recipient-email" name="email" onblur="validateInput('recipient-email')" required>
+                <span>Please enter the full email address e.g. studentname@example.ac.uk</span>
+                <span id="recipient-email-error" class="error-msg"></span>
+            </fieldset>
+            
+            <fieldset id="assertions">
+                <legend>Badge Assertions (optional)</legend>
+                
+                <label for="assertion-evidence">Evidence</label>
+                <input type="url" id="assertion-evidence" name="evidence" onblur="validateInput('assertion-evidence')">
+                <span>The URL to a page showing the recipients work in earning this badge.</span>
+                <span id="assertion-evidence-error" class="error-msg"></span>
+                
+                <label for="assertion-expiration">Expires</label>
+                <input type="date" id="assertion-expiration" name="expiration" onblur="validateInput('assertion-expiration')">
+                <span>Date the badge assertion is valid until. (revokation not currently supported)</span>
+                <span id="assertion-expiration-error" class="error-msg"></span>
+            </fieldset>
+            
+            <label for="password" class="lone">Password</label>
+            <input type="password" id="password" name="password" class="lone" required>
+            
+            <button id="issue" type="submit" form="badge-form">Issue Badges</button>
+            
+            <p class="form-error error-msg">Your form contains errors</p>
+        </form>
+    </main>
+    
+    <footer>
+        <section>
+            <p>&copy; <a href="http://www.ucs.ac.uk">ucs.ac.uk</a></p>
+        </section>
+    </footer>
+</body>
+
+</html>

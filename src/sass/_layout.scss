@@ -1,0 +1,79 @@
+body {
+    margin: 0 auto;
+    padding: 0;
+}
+
+header {
+    margin: 0;
+    padding: 5px 25px;
+    width: 100%;
+}
+
+main {
+    margin: 5px 0;
+    padding: 5px;
+    width: calc(100% - 10px);
+}
+
+label {
+    margin: 10px 0 3px 0;
+}
+
+label, input:not(#password), textarea {
+    display: block;
+    width: 100%;
+}
+
+#badge-selector {
+    min-width: 300px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#import-recipients {
+    margin-bottom: 10px;
+}
+
+button {
+    margin: 10px 0;
+}
+
+fieldset > span {
+    display: inline-block;
+}
+
+fieldset {
+    margin: 20px 5px;  
+}
+
+.lone {
+    margin: 0 20px;
+}
+
+#issue {
+    margin: 20px 20px;
+    width: calc(100% - 40px);
+}
+
+footer {
+    clear: both;
+    margin: 10px 0;
+    text-align: center;
+}
+
+// footer > section {
+//     width: 100%;
+// }
+
+@media only screen and (min-width: 680px) {
+    body {
+        max-width: 660px;
+    }
+    
+    #issue {
+        width: initial;
+        float: right;
+        position: relative;
+        top: -20px;
+    }
+}

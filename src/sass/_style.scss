@@ -1,0 +1,55 @@
+body {
+    background: lighten($ucs-grey, 50%);
+}
+
+header {
+    background: lighten($ucs-yellow, 40%);
+}
+
+fieldset {
+    background: lighten($ucs-grey, 65%)
+}
+
+h1 {
+    color: darken($ucs-green, 15%);
+}
+
+#addnew {
+    display: none;
+}
+
+label {
+    font-weight: bold;
+}
+
+legend {
+    border: 1px solid black;
+    border-radius: 5px;
+    background: lighten($ucs-blue, 20%);
+    color: black;
+}
+
+.error-msg {
+    color: $error;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.form-error {
+    display: none;
+}
+
+button, input[type='file'], select {
+    font-size: 1.2em;
+}
+
+footer {
+    margin: 0;
+    background: lighten($ucs-grey, 10%);
+    padding: 10px;
+}
+
+footer * {
+    color: lighten($ucs-blue, 30%);
+    text-decoration: none;
+}

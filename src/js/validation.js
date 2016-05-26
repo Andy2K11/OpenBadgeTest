@@ -16,7 +16,7 @@ function validateInput(id) {
     var urlPattern = /^https?\:\/\//;
     var pngPattern = /\.png$/;
     var jsonPatter = /\.json$/;
-    var emailPattern = /\@ucs\.ac\.uk$/;
+    var emailPattern = /\@.*\..*$/;
     
     var inputField = document.getElementById(id);
     var inputFieldError = document.getElementById(id+"-error");
@@ -152,6 +152,13 @@ function validateRecipient() {
  * When user submits form, checks if it's valid before posting data
  */
 function validateForm() {
+    var submitBtn = document.getElementById("issue");
+    submitBtn.disabled = true;
+    
+    var formError = document.getElementsByClassName("form-error");
+    
+    
+    
     /*
      * Is user creating a new badge or have they selected an existing one
      * NB: If they've already explicitly create a new one then the fieldset
@@ -159,27 +166,42 @@ function validateForm() {
      */
     if (document.getElementById("addnew").style.display === "block") {
         if (!createBadge()) {
+            formError.style.display = "block";
+            submitBtn.disabled = false;
             return false;
         }
     }
         
     if (!validateRecipient()) {
         console.log("Validation failed");
-        var formError = document.getElementById("form-error");
         formError.style.display = "block";
+        submitBtn.disabled = false;
         return false;
     }
     
+    var password = document.getElementById("password");
+    
+    google.script.run.withFailureHandler( function (err) {
+        for (i = formError.length; i--; ) {
+            formError[i].style.display = "block";
+        }
+        submitBtn.disabled = false;
+        console.log("password error");
+        return false;
+    }).checkPassord(password.value);
+        
     var form = document.getElementById("badge-form");
     if (document.getElementById("import-recipients").value) {
         console.log("Importing");
         google.script.run.withFailureHandler(function (err) {
             console.log("Bulk badge issuing failed " + err);
+            submitBtn.disabled = false;
             return false;
         }).withSuccessHandler(function (response) {
             console.log("Filename: " + response);
         }).uploadFile(form);
     }
+    
     console.log("Form submitted");
 }
 
